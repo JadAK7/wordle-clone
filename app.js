@@ -11,6 +11,10 @@ app.get("/normal-game", (req, res) => {
   res.render("normal-game");
 });
 
+app.get("/backwards-game", (req, res) => {
+  res.render("backwards-game");
+});
+
 app.get("/", (req, res) => {
   res.render("index");
 });

@@ -1,10 +1,20 @@
 body {
-    background-color: cadetblue;
+    font-family: 'Times New Roman', Times, serif;
+    background-image: url(./istockphoto-1174989484-170667a.jpg);
 }
 
 header {
-    font-size: 30px;
-    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 10px;
+    box-sizing: border-box;
+    margin-left: 20px;
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+.W {
+    color: black;
+    background-color: white;
+    box-shadow: 5px 10px 10px black;
+    width: max-content;
 }
 
 #container {
@@ -15,11 +25,11 @@ header {
 }
 
 #game-options {
-    margin: auto;
+    margin-top: 100px;
     height: auto;
     position: absolute;
-    bottom: 50%;
     display: grid;
+    background-color: rgb(30, 110, 215);
 }
 
 a {
@@ -28,9 +38,9 @@ a {
     color: black;
 }
 
-#game-option {
-    border-width: 5px;
+.game-option {
+    border-width: 10px;
     border-radius: 5px;
     background-color: white;
-    margin: 50px
+    margin: 50px;
 }
