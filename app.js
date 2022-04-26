@@ -15,6 +15,14 @@ app.get("/backwards-game", (req, res) => {
   res.render("backwards-game");
 });
 
+app.get("/hidden-game", (req, res) => {
+  res.render("hidden-game");
+});
+
+app.get("/fixed-game", (req, res) => {
+  res.render("fixed-game");
+});
+
 app.get("/", (req, res) => {
   res.render("index");
 });

@@ -1,8 +1,9 @@
-import { dictionary } from "./words.js";
+import { dictionary, targetWords } from "./words.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const grid = document.querySelector("[data-grid]");
-  const word = dictionary[Math.floor(Math.random() * dictionary.length)];
+  const word = targetWords[Math.floor(Math.random() * targetWords.length)];
+  const targetSquare = Math.floor(Math.random() * 5);
 
   const startup = function () {
     document.addEventListener("keydown", handleKeyDown);
@@ -61,26 +62,45 @@ document.addEventListener("DOMContentLoaded", async () => {
       return word + letter.dataset.key;
     }, "");
     if (!dictionary.includes(guess)) {
-      return alert("not a word");
+      shakeTiles(squares);
+      return showAlert("not a word");
     }
     checkWord(squares, guess);
   };
 
   const checkWord = function (squares, guess) {
     for (let i = 0; i < word.length; i++) {
-      if (word[i] === squares[i].dataset.key) flipTileGreen(squares[i]);
+      if (i === targetSquare) {
+        squares[i].dataset.active = false;
+        continue;
+      }
+      if (word[i] === squares[i].dataset.key)
+        setTimeout(() => {
+          flipTileGreen(squares[i]);
+        }, 300);
       else if (word.includes(squares[i].dataset.key))
-        flipTileYellow(squares[i]);
-      else flipTileRed(squares[i]);
+        setTimeout(() => {
+          flipTileYellow(squares[i]);
+        }, 300);
+      else
+        setTimeout(() => {
+          flipTileRed(squares[i]);
+        }, 300);
     }
     if (word === guess) {
-      alert("CONGRATS!!!!!");
+      danceTiles(squares);
+      showAlert("CONGRATS!!!!!");
+      stop();
+    }
+    const remainingSquares = grid.querySelectorAll(":not([data-key])");
+    if (remainingSquares.length === 0) {
+      showAlert(word);
       stop();
     }
   };
 
   const flipTileRed = function (letter) {
-    letter.style.backgroundColor = "red";
+    letter.style.backgroundColor = "grey";
     letter.dataset.active = false;
   };
   const flipTileGreen = function (letter) {
@@ -92,6 +112,39 @@ document.addEventListener("DOMContentLoaded", async () => {
     letter.dataset.active = false;
   };
 
+  const showAlert = function (message, duration = 3000) {
+    const alert = document.createElement("div");
+    const alertContainer = document.querySelector("[data-alert-container]");
+    alert.textContent = message;
+    alert.classList.add("alert");
+    alertContainer.prepend(alert);
+    if (duration == null) return;
+    setTimeout(() => {
+      alert.classList.add("hide");
+      alert.remove();
+    }, duration);
+  };
+
+  const danceTiles = function (tiles) {
+    tiles.forEach((tile, index) => {
+      tile.classList.add("dances");
+    });
+  };
+
+  const shakeTiles = function (tiles) {
+    tiles.forEach((tile) => {
+      tile.classList.add("shake");
+      tile.addEventListener(
+        "animationend",
+        () => {
+          tile.classList.remove("shake");
+        },
+        { once: true }
+      );
+    });
+  };
+
   console.log(word);
+
   startup();
 });

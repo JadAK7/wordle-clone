@@ -6,7 +6,7 @@ body {
 h1 {
     text-align: center;
     margin: 0;
-    color: white;
+    color:var(--primary-text-color);
     font-weight: bold;
 }
 hr {
@@ -68,6 +68,28 @@ hr {
     grid-column: span 2;
 }
 
+.alert-container {
+    position: fixed;
+    top: 10vh;
+    left: 50vw;
+    transform: translateX(-50%);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.alert {
+    pointer-events: none;
+    background-color: black;
+    color: white;
+    padding: .75em;
+    border-radius: .25em;
+    opacity: 1;
+    transition: opacity 500ms ease-in-out;
+    margin-bottom: .5em;
+}
+
 .keyboard-space {
     grid-column: span 1;
 }
@@ -91,4 +113,51 @@ hr {
     --hue: 60;
     --saturation:100%;
     --lightness: 55%
+}
+
+.dances {
+    animation: dance 0.5s infinite;
+}
+.shake {
+    animation: shakes 1s ease-in-out
+}
+
+@keyframes shakes {
+    10% {
+      transform: translateX(-5%);
+    }
+  
+    30% {
+      transform: translateX(5%);
+    }
+  
+    50% {
+      transform: translateX(-7.5%);
+    }
+  
+    70% {
+      transform: translateX(7.5%);
+    }
+  
+    90% {
+      transform: translateX(-5%);
+    }
+  
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+@keyframes dance {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
 }
