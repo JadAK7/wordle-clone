@@ -3,6 +3,8 @@ import { dictionary, targetWords } from "./words.js";
 document.addEventListener("DOMContentLoaded", async () => {
   const grid = document.querySelector("[data-grid]");
   const word = targetWords[Math.floor(Math.random() * targetWords.length)];
+  let index = 5;
+  let row = 1;
 
   const startup = function () {
     document.addEventListener("keydown", handleKeyDown);
@@ -34,13 +36,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   };
 
+  const getRowSquares = function () {
+    return grid.querySelectorAll(`[data-row="${row}"]`);
+  };
   const getActiveSquares = function () {
     return grid.querySelectorAll(`[data-active="true"]`);
   };
 
   const addLetter = function (letter) {
     const activeSquares = getActiveSquares();
-    if (activeSquares.length >= 5) return;
+    if (activeSquares.length >= index) return;
     const square = grid.querySelector(":not([data-key])");
     square.dataset.key = letter;
     square.textContent = letter;
@@ -56,7 +61,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   const submitWord = async function () {
-    const squares = [...getActiveSquares()];
+    const squares = [...getRowSquares()];
+    row++;
     const guess = squares.reduce((word, letter) => {
       return word + letter.dataset.key;
     }, "");
@@ -100,6 +106,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
   const flipTileGreen = function (letter, i, key) {
     const letters = grid.querySelectorAll(`[data-col="${i + 1}"]`);
+    if (letter.textContent != key) index--;
     for (let lett of letters) {
       lett.style.backgroundColor = "green";
       lett.dataset.key = key;
