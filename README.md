@@ -1,6 +1,6 @@
 # wordle-clone
 
-This is a clone of the popular game Wordle.
+This is a clone of the popular game Wordle. (Incomplete)
 
 It is built using vanilla JavaScript.
 
